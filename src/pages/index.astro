@@ -10,6 +10,7 @@ import Layout from "../layouts/Layout.astro";
 
 interface WebsiteData {
   websiteTitle: string;
+  websiteIcon: { fields: { file: { url: string } } };
   developerName: string;
   developerLocation: string;
   projectLinks: string[];
@@ -30,6 +31,7 @@ const entries = await contentfulClient.getEntries<WebsiteData>({
 
 const {
   websiteTitle,
+  websiteIcon,
   developerName,
   developerLocation,
   heroTitle,
@@ -44,7 +46,7 @@ const {
 } = entries.items[0].fields;
 ---
 
-<Layout title={websiteTitle}>
+<Layout title={websiteTitle} icon={websiteIcon}>
   <Header developerName={developerName} developerLocation={developerLocation} />
   <Hero heroTitle={heroTitle} />
   <About
