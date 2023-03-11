@@ -1,0 +1,93 @@
+---
+import Section from "./Section.astro";
+
+const { developerLocation, developerName } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<Section>
+  <div class="header-container">
+    <div class="info">
+      <span id="name">{developerName}</span>
+    </div>
+    <div class="info">
+      <div>{developerLocation}</div>
+      <div class="year">{currentYear}</div>
+    </div>
+  </div>
+
+  <script>
+    function delayHeader() {
+      document.querySelector("html").style.overflow = "hidden";
+
+      setTimeout(() => {
+        const headerInfos = document.querySelectorAll<HTMLElement>(".info");
+        headerInfos.forEach((elem) => (elem.style.display = "flex"));
+
+        document.querySelector("html").style.overflow = "visible";
+        document.querySelector("body").style.overflow = "auto";
+      }, 2500);
+    }
+
+    delayHeader();
+  </script>
+</Section>
+
+<style>
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 10vh;
+  }
+
+  .year {
+    margin-left: 2.5rem;
+  }
+
+  .info {
+    display: none;
+    align-items: center;
+    min-width: 14.063rem;
+    transition: 3s ease;
+  }
+
+  .info:nth-child(1)::after {
+    content: "";
+    width: 6.25rem;
+    height: 0.125rem;
+    background: #326355;
+    margin-left: 1.875rem;
+    transition: ease 4s;
+    animation: first-info 1.7s ease-in;
+  }
+
+  @keyframes first-info {
+    0% {
+      width: 0;
+    }
+
+    100% {
+      width: 6.25rem;
+    }
+  }
+
+  .info:nth-child(2)::after {
+    content: "";
+    width: 1.563rem;
+    height: 0.125rem;
+    background: #326355;
+    margin-left: 1.875rem;
+    animation: second-info 1.7s ease-in;
+  }
+
+  @keyframes second-info {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 1.563rem;
+    }
+  }
+</style>

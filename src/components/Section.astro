@@ -1,0 +1,32 @@
+---
+const { fullWidth } = Astro.props;
+---
+
+<section class={fullWidth ? "full-width" : ""}>
+  <slot />
+</section>
+
+<style is:global>
+  section {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .moving-up {
+    display: inline-block;
+  }
+
+  @keyframes animate {
+    from {
+      transform: translateY(+180px);
+    }
+    to {
+      transform: translateY(0px);
+    }
+  }
+</style>

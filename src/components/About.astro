@@ -1,0 +1,112 @@
+---
+import Section from "./Section.astro";
+const {
+  aboutDescription,
+  aboutImage,
+  experinceDetails,
+  experienceDescription,
+} = Astro.props;
+
+const currentYear = new Date().getFullYear();
+---
+
+<Section>
+  <div class="about-container">
+    <div class="about-introduction">
+      {
+        aboutDescription.map((item: string) => (
+          <div class="link">
+            <span class="moving-up">{item}</span>
+          </div>
+        ))
+      }
+    </div>
+    <div class="about-image">
+      <img src={aboutImage.fields.file.url} alt="about-image" id="moveImg" />
+    </div>
+  </div>
+</Section>
+<section class="description-text">
+  <div class="description-container">
+    <div class="date">
+      <p>2019<br />-{currentYear}</p>
+    </div>
+    <div class="description">
+      {
+        experinceDetails.map((item) => (
+          <>
+            <span class="moving-up">{item}</span>
+            <br />
+          </>
+        ))
+      }
+      <span class="moving-up">{experienceDescription}</span>
+    </div>
+  </div>
+</section>
+<style>
+  .about-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60vh;
+    overflow: hidden;
+    margin: 150px 0;
+    position: relative;
+    margin-bottom: 20vh;
+  }
+  .about-image {
+    width: 100%;
+    height: 360px;
+    position: absolute;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .about-image img {
+    overflow: hidden;
+    width: 630px;
+    position: absolute;
+    top: -220px;
+    right: 0px;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  .about-introduction {
+    position: absolute;
+    z-index: 1;
+    font-size: 3vw;
+    font-family: "Ogg";
+  }
+
+  @keyframes image-opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.6;
+    }
+  }
+
+  .description-container {
+    display: flex;
+    justify-content: center;
+    height: 70vh;
+  }
+  .description {
+    flex: 1;
+    font-size: 25px;
+    padding-right: 100px;
+    line-height: 40px;
+    font-family: "Ogg";
+  }
+  .date {
+    font-size: 40px;
+    flex: 1;
+    font-family: "Ogg";
+    font-weight: bold;
+  }
+  .description span {
+    display: block;
+  }
+</style>

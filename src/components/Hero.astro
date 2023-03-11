@@ -1,0 +1,57 @@
+---
+import Section from "./Section.astro";
+
+const { heroTitle } = Astro.props;
+---
+
+<Section>
+  <div class="text-container">
+    <div class="text-move move-right"><h1>{heroTitle[0]}</h1></div>
+    <div class="text-move move-left"><h1>{heroTitle[1]}</h1></div>
+    <div class="text-move move-right"><h1>{heroTitle[2]}</h1></div>
+    <div class="text-move move-left"><h1>{heroTitle[3]}</h1></div>
+  </div>
+</Section>
+
+<style>
+  .text-container .move-left:nth-child(2) {
+    text-align: right;
+  }
+
+  .text-container .move-left:nth-child(4) {
+    text-align: center;
+    padding-left: 25vw;
+  }
+
+  .text-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 70vh;
+    margin-top: 10vh;
+  }
+
+  .text-move {
+    font-size: 6.5vw;
+    width: 100%;
+    text-transform: uppercase;
+    line-height: 9vw;
+
+    font-family: "Monument";
+    overflow: hidden;
+  }
+  .text-move h1 {
+    animation: mover3 2.5s ease;
+  }
+  @keyframes mover3 {
+    from {
+      transform: translateY(+160px);
+    }
+
+    to {
+      transform: translateY(0px);
+    }
+  }
+</style>

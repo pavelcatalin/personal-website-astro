@@ -1,81 +1,168 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import { contentfulClient } from "../lib/contentful";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Footer from "../components/Footer.astro";
+import Contact from "../components/Contact.astro";
+import Projects from "../components/Projects.astro";
+import Layout from "../layouts/Layout.astro";
+
+interface WebsiteData {
+  websiteTitle: string;
+  developerName: string;
+  developerLocation: string;
+  projectLinks: string[];
+  heroTitle: string[];
+  aboutDescription: string[];
+  aboutImage: string;
+  experinceDetails: string[];
+  experienceDescription: string;
+  projectsList: { link: string; name: string; techStack: string }[];
+  contactList: { link: string; name: string }[];
+  developedBy: string;
+  footerText: string;
+}
+
+const entries = await contentfulClient.getEntries<WebsiteData>({
+  content_type: "personalWebsite",
+});
+
+const {
+  websiteTitle,
+  developerName,
+  developerLocation,
+  heroTitle,
+  aboutDescription,
+  aboutImage,
+  experinceDetails,
+  experienceDescription,
+  projectsList,
+  contactList,
+  developedBy,
+  footerText,
+} = entries.items[0].fields;
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
+<Layout title={websiteTitle}>
+  <Header developerName={developerName} developerLocation={developerLocation} />
+  <Hero heroTitle={heroTitle} />
+  <About
+    aboutDescription={aboutDescription}
+    aboutImage={aboutImage}
+    experinceDetails={experinceDetails}
+    experienceDescription={experienceDescription}
+  />
+  <Projects projectsList={projectsList} />
+  <Contact contactList={contactList} developedBy={developedBy} />
+  <Footer footerText={footerText} />
 </Layout>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
+<script src="../scripts/index.ts"></script>
+
+<style lang="css">
+  @media screen and (max-width: 1224px) {
+    section {
+      width: 90%;
+    }
+    .description {
+      flex: 2;
+      padding-right: 0;
+    }
+    .paragraph {
+      font-size: 35px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .text-container {
+      height: 55vh;
+    }
+    .paragraph {
+      bottom: 40px;
+      font-size: 4vw;
+    }
+    .image {
+      height: 300px;
+      width: 90%;
+      right: 0;
+    }
+    .description-container {
+      flex-direction: column;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    .info {
+      flex: 1;
+      min-width: 144px;
+    }
+    .year {
+      margin-left: 20px;
+    }
+    .info:nth-child(2) {
+      justify-content: flex-end;
+    }
+    .info:nth-child(1)::after,
+    .info:nth-child(2)::after {
+      display: none;
+    }
+    .text-container {
+      height: 50vh;
+    }
+    .message-container {
+      height: 50vh;
+      margin-top: 0;
+    }
+    .image {
+      height: 200px;
+      width: 90%;
+    }
+    .image img {
+      right: -180px;
+      display: none;
+    }
+    .paragraph {
+      font-size: 19px;
+      bottom: 75px;
+    }
+    .paragraph span {
+      display: inline;
+    }
+    .description-container {
+      flex-direction: column;
+    }
+    .description {
+      font-size: 18px;
+      line-height: 25px;
+      padding: 0;
+    }
+    .project-description {
+      display: inline-flex;
+    }
+    .type,
+    .name,
+    .agency {
+      display: inline-block;
+      padding-right: 20px;
+    }
+    .projects {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-around;
+      font-size: 20px;
+      margin-top: 10px;
+    }
+    .project-info {
+      flex: 1;
+    }
+    .project-info a,
+    .links a {
+      font-size: 4.5vw;
+    }
+    .moving-up {
+      visibility: hidden;
+    }
+  }
 </style>

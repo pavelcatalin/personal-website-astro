@@ -1,0 +1,93 @@
+---
+import Section from "./Section.astro";
+
+const { projectsList } = Astro.props;
+---
+
+<Section>
+  <div class="projects-container">
+    <div class="project project-description">
+      <div class="project-type type">tech stack</div>
+      <div class="project-name name">project</div>
+      <div class="project-agency agency"></div>
+    </div>
+
+    <div class="line"></div>
+    {
+      projectsList.list.map(
+        (item: { link: string; name: string; techStack: string }) => (
+          <>
+            <div class="projects">
+              <div class="project-type project-info">{item.techStack}</div>
+              <div class="project-name project-info">
+                <a href={item.link} target="_blank" class="moving-up">
+                  {item.name}
+                </a>
+              </div>
+              <div class="project-agency project-info" />
+            </div>
+            <div class="line" />
+          </>
+        )
+      )
+    }
+  </div>
+</Section>
+
+<style>
+  .line {
+    height: 1px;
+    background-color: black;
+    animation: ease;
+  }
+
+  .projects-container {
+    height: 80vh;
+    margin-top: 200px;
+  }
+
+  .projects {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 150px;
+    animation: mover5 5s ease;
+    font-size: 25px;
+  }
+
+  .project-type {
+    flex: 3;
+  }
+
+  .project-name {
+    flex: 10;
+    overflow: hidden;
+  }
+
+  .project-agency {
+    flex: 1;
+  }
+
+  .project-description {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    font-size: 25px;
+  }
+
+  .projects a {
+    text-decoration: none;
+    color: black;
+    font-size: 3vw;
+    font-family: "Monument";
+    text-transform: uppercase;
+  }
+  @keyframes mover-line {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+</style>
