@@ -2,6 +2,7 @@
 import Section from "./Section.astro";
 
 const { projectsList } = Astro.props;
+console.log(projectsList.list);
 ---
 
 <Section>
@@ -15,10 +16,14 @@ const { projectsList } = Astro.props;
     <div class="line"></div>
     {
       projectsList.list.map(
-        (item: { link: string; name: string; techStack: string }) => (
+        (item: { link: string; name: string; techStack: string[] }) => (
           <>
             <div class="projects">
-              <div class="project-type project-info">{item.techStack}</div>
+              <div class="project-type project-info">
+                {item.techStack.map((stack) => (
+                  <span>{stack}</span>
+                ))}
+              </div>
               <div class="project-name project-info">
                 <a href={item.link} target="_blank" class="moving-up">
                   {item.name}
@@ -50,13 +55,15 @@ const { projectsList } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 150px;
+    padding: 1rem 0;
     animation: mover5 5s ease;
     font-size: 25px;
   }
 
   .project-type {
     flex: 3;
+    display: flex;
+    flex-direction: column;
   }
 
   .project-name {
