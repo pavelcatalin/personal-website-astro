@@ -51,7 +51,7 @@ const currentYear = new Date().getFullYear();
     justify-content: space-between;
     height: 60vh;
     overflow: hidden;
-    margin: 150px 0;
+    margin: 150px 0 0 0;
     position: relative;
     margin-bottom: 20vh;
   }
@@ -91,7 +91,7 @@ const currentYear = new Date().getFullYear();
   .description-container {
     display: flex;
     justify-content: center;
-    height: 70vh;
+
   }
   .description {
     flex: 1;
@@ -108,5 +108,20 @@ const currentYear = new Date().getFullYear();
   }
   .description span {
     display: block;
+  }
+
+
+  @media (max-width:480px) {
+    .about-container{
+      margin-bottom: 0;
+    }
+
+    .about-introduction {
+      font-size: 6vw;
+    }
+
+    .about-image{
+      right: -77px;
+    }
   }
 </style>
